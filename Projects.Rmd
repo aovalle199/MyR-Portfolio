@@ -7,13 +7,13 @@ output: html_document
 
 ###My Projects
 
-####Gene Regulatory Networks 
+####[Gene Regulatory Networks] 
 ###### Biostatistics and Computational Biology internship 
 
 - Created Regulatory Networks in TB using PANDA
 - Attempted to improve the regulatory network 
 
-#### Understanding Visual patterns in visual attention tasks 
+#### [Understanding Visual patterns in visual attention tasks](https://github.com/aovalle199/Special_StudiesVCA_LAB.git) 
 ###### Visual Cognition Lab 
 
 - 
