@@ -6,7 +6,7 @@ output: html_document
 ---
 
 
-#```{r, echo = FALSE, fig.align='center'}
+```{r, echo = FALSE, fig.align='center'}
 
 load("~/Dropbox (HSPH)/VCA LAB/Seque_Data.rda")
 require(dplyr)
@@ -29,7 +29,7 @@ head(Num_df_trial)
 m<-ggplot(Num_df_trial, aes(x = trial, y = Total_per_trial, color= Subject))+ geom_point() + theme(axis.title.y = element_text(size = rel(1.5)))+theme(axis.title.x = element_text(size = rel(1.5)))+theme(legend.key = element_rect(size = rel(1.5)))+theme(axis.text = element_text(size = 15))
 
 ggplotly(m)
-#```
+```
 
 
 
