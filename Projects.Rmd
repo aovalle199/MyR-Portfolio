@@ -7,19 +7,10 @@ output: html_document
 
 ###My Projects
 
-####[Gene Regulatory Networks] 
+####[Gene Regulatory Networks](http://nickstrayer.me/visualization_in_r/)
 ###### Biostatistics and Computational Biology internship 
 
 - Created Regulatory Networks in TB using PANDA
 - Attempted to improve the regulatory network 
 
-#### [Visual patterns  tasks](https://github.com/aovalle199/Visual_patterns/) 
-###### Visual Cognition Lab 
-
-- 
-- 
-
-#### Familial Dementia and Neuroimaging Lab 
-###### Mass General Hospital 
--
--
+#### [Visual patterns  tasks](http://bl.ocks.org/nstrayer/37a503dd1db369a8f7e3ce21757e19ee)
