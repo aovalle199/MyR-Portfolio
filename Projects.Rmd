@@ -7,10 +7,10 @@ output: html_document
 
 ###My Projects
 
-####[Gene Regulatory Networks](http://nickstrayer.me/visualization_in_r/)
+####[Gene Regulatory Networks]
 ###### Biostatistics and Computational Biology internship 
 
 - Created Regulatory Networks in TB using PANDA
 - Attempted to improve the regulatory network 
 
-#### [Visual patterns  tasks](http://bl.ocks.org/nstrayer/37a503dd1db369a8f7e3ce21757e19ee)
+#### [Visual patterns  tasks]

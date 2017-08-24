@@ -5,7 +5,6 @@ date: "August 24, 2017"
 output: html_document
 ---
 
-### HELLO WORLD !!
 
 #```{r, eval=FALSE, include=FALSE}
 ## All of these packages need to be uploaded for the code to work.
