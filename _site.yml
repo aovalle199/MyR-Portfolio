@@ -1,0 +1,12 @@
+name: "My R Portfolio"
+output_dir: "."
+navbar: 
+ title: "Andrea Ovalle's R portfolio"
+ left:
+  - text: "Home"
+    href: index.html
+  - text: "Projects"
+    href: projects.html
+  - text: "About"
+    href: about.html
+     
