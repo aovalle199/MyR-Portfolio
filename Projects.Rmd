@@ -13,7 +13,7 @@ output: html_document
 - Created Regulatory Networks in TB using PANDA
 - Attempted to improve the regulatory network 
 
-#### [Understanding Visual patterns in visual attention tasks](https://github.com/aovalle199/Special_StudiesVCA_LAB.git) 
+#### [Visual patterns  tasks](https://github.com/aovalle199/Visual_patterns/) 
 ###### Visual Cognition Lab 
 
 - 
