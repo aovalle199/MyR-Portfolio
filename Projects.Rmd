@@ -14,6 +14,13 @@ output: html_document
 - Attempted to improve the regulatory network 
 
 #### Visual Cognition Lab
+-
+-
+-
+#### Familial Dementia and Neuroimaging Lab 
+-
+-
+-
 
 
 

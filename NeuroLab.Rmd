@@ -5,12 +5,93 @@ date: "August 25, 2017"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+
+## Familial Dementia and Neuroimaging lab
+
+
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+require(dplyr)
+require(ggplot2)
+require(plotly)
+require(PerformanceAnalytics)
+require(Hmisc)
+require(ppcor)
+require(gridExtra)
+require(dplyr)
+require(Rmisc)
+
+load("~/Dropbox/AD summer Research 2016/Project AD/EF2.rda")%>% na.omit()
+load("~/Dropbox/AD summer Research 2016/Project AD/SDNepaPoster.rda")
 ```
 
-## R Markdown
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+#EF2 <- read.csv("~/Dropbox/AD summer Research 2016/Project AD/Workbook3.1.csv")%>% na.omit()
+#EF2 <- Workbook3.1
+C <- EF2 %>%
+  dplyr::select(PIB,Ineco_ttl,Ineco_Conflict,Ineco_Digits_backw,Ineco_Go.No.Go,Ineco._Motor,Ineco_Hayling,Ineco_proverbs,Ineco_Mem_.Verbal,Ineco_Mem_spacial,Wis_Rtas_Perse,Fas_ttl_Perse,FAS_total,Stroop_word.color,code,Age,Education)%>%
+  filter(code == "2")
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+sd(C$FAS_total)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+NC <- EF2 %>%
+  dplyr::select(PIB,Ineco_ttl,Ineco_Conflict,Ineco_Digits_backw,Ineco_Go.No.Go,Ineco._Motor,Ineco_Hayling,Ineco_proverbs,Ineco_Mem_.Verbal,Ineco_Mem_spacial,Wis_Rtas_Perse,Fas_ttl_Perse,FAS_total,Stroop_word.color,code, Age, Education)%>%
+  filter(code == "1")
+
+sd(NC$FAS_total)
+t.test(NC$FAS_total, C$FAS_total)
+
+
+Amy_H <- C %>%
+  dplyr::select(PIB,Ineco_Conflict,Ineco._Motor,Ineco_Hayling,Ineco_Digits_backw,Ineco_Go.No.Go,Ineco_proverbs,Ineco_Mem_.Verbal,Ineco_Mem_spacial,Wis_Rtas_Perse,Fas_ttl_Perse,Ineco_ttl,FAS_total,Stroop_word.color)%>%
+  filter(PIB >= 1.19)
+
+Amy_L <- C %>%
+    dplyr::select(PIB,Ineco_Conflict,Ineco._Motor,Ineco_Hayling,Ineco_Digits_backw,Ineco_Go.No.Go,Ineco_proverbs,Ineco_Mem_.Verbal,Ineco_Mem_spacial,Wis_Rtas_Perse,Fas_ttl_Perse, Ineco_ttl,FAS_total,Stroop_word.color)%>%
+  filter(PIB < 1.19)
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+### Difference between the carriers and non-carriers between the three tests. 
+Carriers <-data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(44,35,144))
+NonCarriers <- data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(92 ,20, 45))
+
+
+#DF <- Carriers %>%
+ #full_join(NonCarriers, by = "Tests")
+
+#DF1 <- rename(DF, c("Average.x" = "Carriers", "Average.y" = "NonCarriers"))  
+
+#f <- gather(DF1, Groups, Average, Carriers, NonCarriers)
+
+dodge <- position_dodge(width = 0.9)
+limits <- aes(ymax = f1$Average + f1$SE,
+              ymin = f1$Average - f1$SE)
+
+ggplot(f1, aes(x = Tests, y = Average , fill = Groups))+geom_bar(position = "dodge", stat = "identity")+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 20))+labs(y ="Total Scores", x = "Tests")+geom_errorbar(limits,position = dodge, width = 0.25)
+ 
+
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+i_ttl <- ggplot(EF2, aes(x = PIB, y = Ineco_ttl, color = Status, shape = Status))+geom_point(aes(size = 20))+geom_smooth(method = "lm", se = FALSE)+xlab("PIB-DVR")+ylab("Total Scores")+guides(size = "none")+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 30))+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))
+
+
+
+Stroop <- ggplot(EF2, aes(x = PIB, y = Stroop_word.color, shape = Status, color = Status))+geom_point(aes(size = 20))+geom_smooth(method="lm", se = FALSE)+xlab("PIB-DVR")+ ylab("Total Scores")+guides(size = "none")+theme(axis.title = element_text(size = 32), legend.text = element_text(size = 20), legend.title = element_text(size = 30))+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size = 15))
+
+
+Wis_per <- ggplot(EF2, aes(x = PIB, y = Wis_Rtas_Perse, color = Status, shape = Status))+geom_point(aes(size = 20))+geom_smooth(method = "lm", se = FALSE)+xlab("PIB-DVR")+ylab("Perseverative Responses")+guides(size = "none")+theme(axis.title = element_text(size =32), legend.text = element_text(size = 20), legend.title = element_text(size = 30))+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size = 15))
+
+
+
+```
+
+###### Original data has not been used to protect future work. 
+
