@@ -5,7 +5,7 @@ date: "August 24, 2017"
 output: html_document
 ---
 
-###HOME PAGE 
+##HOME PAGE 
 ###### In this website you will find 
  - Projects 
  - CV 
@@ -13,30 +13,8 @@ output: html_document
  - Blog
 
 
-```{r, echo = FALSE, fig.align='center'}
-
-load("~/Dropbox (HSPH)/VCA LAB/Seque_Data.rda")
-require(dplyr)
-require(ggplot2)
-require(plotly) # Interactive graphing 
-
-Seque_Data_1 <- Seque_Data %>% select(TRIAL_LABEL,CURRENT_FIX_INDEX,CURRENT_FIX_INTEREST_AREAS,NEXT_FIX_NEAREST_INTEREST_AREA, RECORDING_SESSION_LABEL,trial,TRIAL_FIXATION_TOTAL) ## This code selects the columns that I am most interested in.
-
-colnames(Seque_Data_1)[colnames(Seque_Data_1)=="RECORDING_SESSION_LABEL"]<-"Subject" # changes the name of x column.
 
 
-
-Num_df_trial <- Seque_Data_1 %>%
-  select(Subject, trial)%>%
-  group_by(Subject, trial)%>%
-  summarise(Total_per_trial = n())%>%
-  arrange(desc(Subject))
-head(Num_df_trial)
-
-m<-ggplot(Num_df_trial, aes(x = trial, y = Total_per_trial, color= Subject))+ geom_point() + theme(axis.title.y = element_text(size = rel(1.5)))+theme(axis.title.x = element_text(size = rel(1.5)))+theme(legend.key = element_rect(size = rel(1.5)))+theme(axis.text = element_text(size = 15))
-
-ggplotly(m)
-```
 
 
 

@@ -7,10 +7,13 @@ output: html_document
 
 ###My Projects
 
-####[Gene Regulatory Networks]
-###### Biostatistics and Computational Biology internship 
+####Gene Regulatory Networks
+###### Biostatistics and Computational Biology 
 
 - Created Regulatory Networks in TB using PANDA
 - Attempted to improve the regulatory network 
 
-#### [Visual patterns  tasks]
+#### Visual Cognition Lab
+
+
+

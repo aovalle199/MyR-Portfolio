@@ -4,9 +4,21 @@ navbar:
  title: "Andrea Ovalle's R portfolio"
  left:
   - text: "Home"
+    icon: fa-home
     href: index.html
-  - text: "Projects"
-    href: projects.html
   - text: "About"
+    icon: fa-info
     href: about.html
+  - text: "Projects"
+    icon: fa-gear
+    href: projects.html
+    menu: 
+      - text: "Building Regulatory Networks"
+        href: regnet.html
+      - text: "Visual Cognition Lab"
+        href: vcalab.html
+      - text: "AD-Neuroimaging Lab"
+        href: NueroLab.html
+
+
      
