@@ -5,10 +5,7 @@ date: "August 25, 2017"
 output: html_document
 ---
 
-
-
 ## Familial Dementia and Neuroimaging lab
-
 
 
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
@@ -58,5 +55,5 @@ Wis_per <- ggplot(EF2, aes(x = PIB, y = Wis_Rtas_Perse, color = Status, shape = 
 
 ```
 
-###### Original data has not been used to protect future work. 
+###### Original data has not been used. 
 
