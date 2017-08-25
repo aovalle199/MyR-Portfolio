@@ -33,9 +33,9 @@ dodge <- position_dodge(width = 0.9)
 limits <- aes(ymax = f1$Average + f1$SE,
               ymin = f1$Average - f1$SE)
 
-ggplot(f1, aes(x = Tests, y = Average , fill = Groups))+geom_bar(position = "dodge", stat = "identity")+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 20))+labs(y ="Total Scores", x = "Tests")+geom_errorbar(limits,position = dodge, width = 0.25)
+plot2 <- ggplot(f1, aes(x = Tests, y = Average , fill = Groups))+geom_bar(position = "dodge", stat = "identity")+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 20))+labs(y ="Total Scores", x = "Tests")+geom_errorbar(limits,position = dodge, width = 0.25)
  
-
+plot2
 
 ```
 
