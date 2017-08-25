@@ -5,6 +5,13 @@ date: "August 24, 2017"
 output: html_document
 ---
 
+###HOME PAGE 
+###### In this website you will find 
+ - Projects 
+ - CV 
+ - About Me 
+ - Blog
+
 
 ```{r, echo = FALSE, fig.align='center'}
 
