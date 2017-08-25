@@ -12,6 +12,7 @@ output: html_document
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 
 load("~/Dropbox (HSPH)/VCA LAB/Seque_Data.rda")
+load("~/Dropbox/VCA LAB/Num_df_trial.rda")
 require(dplyr)
 require(tidyr)
 require(ggplot2)
@@ -50,17 +51,21 @@ multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
   }
 }
 
-Seque_Data_1 <- Seque_Data %>% select(TRIAL_LABEL,CURRENT_FIX_INDEX,CURRENT_FIX_INTEREST_AREAS,NEXT_FIX_NEAREST_INTEREST_AREA, RECORDING_SESSION_LABEL,trial,TRIAL_FIXATION_TOTAL) ## This code selects the columns that I am most interested in.
-colnames(Seque_Data_1)[colnames(Seque_Data_1)=="RECORDING_SESSION_LABEL"]<-"Subject" # changes the name of x column.
+
 
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-Num_df_trial <- Seque_Data_1 %>%
-  select(Subject, trial)%>%
-  group_by(Subject, trial)%>%
-  summarise(Total_per_trial = n())%>%
-  arrange(desc(Subject))
+
+Seque_Data_1 <- Seque_Data%>% dplyr::select(TRIAL_LABEL,CURRENT_FIX_INDEX,CURRENT_FIX_INTEREST_AREAS,NEXT_FIX_NEAREST_INTEREST_AREA, RECORDING_SESSION_LABEL,trial,TRIAL_FIXATION_TOTAL) ## This code selects the columns that I am most interested in.
+colnames(Seque_Data_1)[colnames(Seque_Data_1)=="RECORDING_SESSION_LABEL"]<-"Subject" # changes the name of x column.
+
+#Num_df_trial <- Seque_Data_1 %>%
+  #dplyr::select(Subject, trial)%>%
+  #dplyr::group_by(Subject, trial)%>%
+  #dplyr::summarise(Total_per_trial = n())%>%
+  #dplyr::arrange(desc(Subject))
+
 head(Num_df_trial)
 
 m<-ggplot(Num_df_trial, aes(x = trial, y = Total_per_trial, color= Subject))+ geom_point() + theme(axis.title.y = element_text(size = rel(1.5)))+theme(axis.title.x = element_text(size = rel(1.5)))+theme(legend.key = element_rect(size = rel(1.5)))+theme(axis.text = element_text(size = 15))
@@ -415,10 +420,6 @@ multiplot(plotlist = list10, cols = 2)
 
 ```
 
-
-
-
-
 Color Search among T's
 
 Single target pure color search similar to Exp 12 but not W, and with a new set of stimuli
@@ -556,11 +557,7 @@ my_plot9 <- ggplot(df5.8, aes(x = Sequence , y = Prob))+
 
 ```
     
-  
-  
-  
-  
-    
+
     
 COLOR T SEARCH PLUS WORKING MEMORY 
 
@@ -568,7 +565,7 @@ COLOR T SEARCH PLUS WORKING MEMORY
 - Color selectivity with the WM load was disrupted across al distractor colors. The identity of the WM load color had no specific effect on the search fixation patterns. 
 WM accuracy was okay for exact color ( ~ 35% error rate) but excellent for 1-2 steps from color (~8%)
 
-```{r 7 Present}
+```{r 7 Present, echo=FALSE, message=FALSE, warning=FALSE}
 data14 <- read.csv("~/Dropbox/VCA LAB/7  .Means.TargetPresent.csv")
 
 Data14 <- data14[,-(0:1)] 

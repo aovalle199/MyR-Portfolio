@@ -33,13 +33,6 @@ Carriers <-data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(44
 NonCarriers <- data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(92 ,20, 45))
 
 
-#DF <- Carriers %>%
- #full_join(NonCarriers, by = "Tests")
-
-#DF1 <- rename(DF, c("Average.x" = "Carriers", "Average.y" = "NonCarriers"))  
-
-#f <- gather(DF1, Groups, Average, Carriers, NonCarriers)
-
 dodge <- position_dodge(width = 0.9)
 limits <- aes(ymax = f1$Average + f1$SE,
               ymin = f1$Average - f1$SE)

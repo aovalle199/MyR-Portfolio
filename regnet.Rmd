@@ -9,7 +9,4 @@ output: html_document
 
 #REGNET
 
-```{r setup, include=FALSE}
-
-```
 
