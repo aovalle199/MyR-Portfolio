@@ -7,8 +7,7 @@ output: html_document
 
 ## Familial Dementia and Neuroimaging lab
 
-
-```{r, message=FALSE, warning=FALSE, include=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 require(dplyr)
 require(ggplot2)
 require(plotly)
