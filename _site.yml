@@ -13,12 +13,16 @@ navbar:
     icon: fa-gear
     href: projects.html
     menu: 
-      - text: "Building Regulatory Networks"
+      - text: "Biostatistics and Computational Biology"
         href: regnet.html
       - text: "Visual Cognition Lab"
         href: vcalab.html
       - text: "AD-Neuroimaging Lab"
         href: NeuroLab.html
-
+        
+output:
+ html_document
+  theme: flatly
+  css: style.css
 
      
