@@ -9,700 +9,700 @@ output: html_document
 #VCA LAB
 
 
-```{r, message=FALSE, warning=FALSE, include=FALSE}
-
-load("~/Dropbox (HSPH)/VCA LAB/Seque_Data.rda")
-load("~/Dropbox/VCA LAB/Num_df_trial.rda")
-require(dplyr)
-require(tidyr)
-require(ggplot2)
-require(plotly) # Interactive graphing 
-library(stringr)
-library(bsselectR)
-library(tidyverse)
-library(scales)
-library(acs14lite)
-
-multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
-  require(grid)
-
-  plots <- c(list(...), plotlist)
-
-  numPlots = length(plots)
-
-  if (is.null(layout)) {
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                    ncol = cols, nrow = ceiling(numPlots/cols))
-  }
-
-  if (numPlots == 1) {
-    print(plots[[1]])
-
-  } else {
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-
-    for (i in 1:numPlots) {
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
-}
-
-
-
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-
-Seque_Data_1 <- Seque_Data%>% dplyr::select(TRIAL_LABEL,CURRENT_FIX_INDEX,CURRENT_FIX_INTEREST_AREAS,NEXT_FIX_NEAREST_INTEREST_AREA, RECORDING_SESSION_LABEL,trial,TRIAL_FIXATION_TOTAL) ## This code selects the columns that I am most interested in.
-colnames(Seque_Data_1)[colnames(Seque_Data_1)=="RECORDING_SESSION_LABEL"]<-"Subject" # changes the name of x column.
-
-#Num_df_trial <- Seque_Data_1 %>%
-  #dplyr::select(Subject, trial)%>%
-  #dplyr::group_by(Subject, trial)%>%
-  #dplyr::summarise(Total_per_trial = n())%>%
-  #dplyr::arrange(desc(Subject))
-
-head(Num_df_trial)
-
-m<-ggplot(Num_df_trial, aes(x = trial, y = Total_per_trial, color= Subject))+ geom_point() + theme(axis.title.y = element_text(size = rel(1.5)))+theme(axis.title.x = element_text(size = rel(1.5)))+theme(legend.key = element_rect(size = rel(1.5)))+theme(axis.text = element_text(size = 15))
-
-ggplotly(m)
-
-```
-
-EXPERIMENT 1A
-- Dual target 1-step and 4-step color separations 
-- Split- target cost; similarity of targets decreases, fixations to dissimilar distractors increases. ( STROUD DISSERTATIONS EXP 1A)
-```{r 1a Present, message=FALSE, warning=FALSE, include=FALSE}
-
-data10 <- read.csv("~/Dropbox/VCA LAB/1a  .Means.TargetPresent.csv")
-
-Data10 <- data10[,-(0:1)] # Substracts columns from the data frame
-
-colnames(Data10) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18") # adds labels to columns
-
-df4.9 <- gather(Data10, Length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.9 <- transform(df4.9, Sequence=ave(seq_along(Length),Length, FUN=seq_along)) ## Creates a sequence that runs along the lenght of the fixation.
-
-### Adds counts of the trials 
-
-df1.8 <- data.frame(x=c(0:18)) ## adds symbols to each data point for each trial.
-
-
-my_plot10 <- ggplot(df5.9, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.9$Length, color = Length))+
-  geom_point(aes(alpha = 0.03))
-  
-  
-```
-
-```{r 1a Absent, message=FALSE, warning=FALSE, include=FALSE}
-data11 <- read.csv("~/Dropbox/VCA LAB/1a  .Means.TargetAbsent.csv")
-
-Data11 <- data11[,-(0:1)] 
-
-colnames(Data11) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df5.1 <- gather(Data11, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df6 <- transform(df5.1, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-df1.9 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-#df6$length <- as.numeric(as.character(df6$length))
-
-my_plot11 <- ggplot(df6, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df6$length, color = length))+
-  geom_point(aes(alpha = 0.03))
-
-```
-
-```{r multiplot 1a, echo=FALSE, message=FALSE, warning=FALSE}
-
-list6 <- list()
-
-for (i in 1:2) {
-  my_plot11 <- ggplot(df6, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df6$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "1a Absent")
-  list6[[1]] <- my_plot11
-  
-
-my_plot10 <- ggplot(df5.9, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.9$Length, color = Length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "1a Present")+ylim(0,30) 
-list6[[2]] <- my_plot10
-  
-
-}
-
-multiplot(plotlist = list6, cols= 2)
-
-```
-
-```{r 1b Present, echo=FALSE, message=FALSE, warning=FALSE}
-
-### (exp. 1b) colour T search
-
-data12 <- read.csv("~/Dropbox/VCA LAB/1b  .Means.TargetPresent.csv")
-
-Data12 <- data12[,-(0:1)] 
-
-colnames(Data12) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df5.2 <- gather(Data12, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df7 <- transform(df5.2, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df_2 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot12 <- ggplot(df7, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df7$length, color = length))+
-  geom_point(aes(alpha = 0.03)) # change labs to upper limits 40 for all of them 
-```
-
-```{r 1b Absent, echo=FALSE, message=FALSE, warning=FALSE}
-
-data13 <- read.csv("~/Dropbox/VCA LAB/1b  .Means.TargetAbsent.csv")
-
-Data13 <- data13[,-(0:1)] 
-
-colnames(Data13) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
-
-df5.3 <- gather(Data13, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df8 <- transform(df5.3, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df_3 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot13 <- ggplot(df8, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df8$length, color = length))+
-  geom_point(aes(alpha = 0.03))
-
-
-```
-
-```{r multiplot 1b, echo=FALSE, message=FALSE, warning=FALSE}
-list7<- list()
-
-for (i in 1:2){
- my_plot12 <- ggplot(df7, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df7$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = " Exp 1b Target Present")+ylim(0,30)
-  list7[[1]] <- my_plot12 
-  
-
-my_plot13 <- ggplot(df8, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df8$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = " Exp 1b Target Absent")+ylim(0,30)
-  list7[[2]] <- my_plot13
-}
-
-multiplot(plotlist = list7, cols =2)
-
-```
-
-
-
-
-Color T search plust WM (orientation)
-
-Orientation bar - WM
-
-Color selectivity was unaffected in the search task. WM accuracy as poor (error rate ~35%)
-```{r sub 10 Target Absent, echo=FALSE, message=FALSE, warning=FALSE}
-
-data <- read.csv("~/Dropbox/VCA LAB/10  .Means.TargetAbsent.csv") 
-
-Data <- data[,-(0:1)] 
-
-colnames(Data) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-my_df4 <- gather(Data, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-my_df5 <- transform(my_df4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-my_plot1 <- ggplot(my_df5, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = my_df5$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 10 Target Absent") 
-
-
-
-```
-
-```{r Sub 10 Target Present, echo=FALSE, message=FALSE, warning=FALSE}
-
-
-data2 <- read.csv("~/Dropbox/VCA LAB/10  .Means.TargetPresent.csv")
-Data2 <- data2[,-(0:1)] 
-
-colnames(Data2) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17", "18")
-
-df4 <- gather(Data2, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5 <- transform(df4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-my_plot2 <- ggplot(df5, aes(x = Sequence, y = Prob))+
-  geom_line(aes(group = df5$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 10 Target Present") 
-
-```
-
-```{r Exp 10 multiplot, echo=FALSE, message=FALSE, warning=FALSE}
-list8 <- list()
-
-for(i in 1:2) {
-my_plot1 <- ggplot(my_df5, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = my_df5$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle("Exp 10 Target Absent")
-list8[[1]]<- my_plot1
-
- my_plot2 <- ggplot(df5, aes(x = Sequence, y = Prob))+
-  geom_line(aes(group = df5$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 10 Target Present")
-list8[[2]] <- my_plot2
-
-}
-
-multiplot(plotlist = list8, cols = 2)
-
-
-```
-
-
-
-
-
-COLOR T SEARCH PLUS WM ( DOTS )
-
-Spatial dot task. 
-Color selectivity was unaffected. WM accuracy was similar to color patch ( error rate ~ 35%)
-
-```{r Exp 11 Absent, echo=FALSE, message=FALSE, warning=FALSE}
-
-
-data3 <- read.csv("~/Dropbox/VCA LAB/11  .Means.TargetAbsent.csv")
-
-Data3 <- data3[,-(0:1)]  
-
-colnames(Data3) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df4.2 <- gather(Data3, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.2 <- transform(df4.2, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1.1 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-my_plot3 <- ggplot(df5.2, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.2$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Absent") 
-
-```
-
-```{r sub 11 Present, echo=FALSE, message=FALSE, warning=FALSE}
-
-data4 <- read.csv("~/Dropbox/VCA LAB/11  .Means.TargetPresent.csv")
-
-Data4 <- data4[,-(0:1)]  
-
-colnames(Data4) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df4.3 <- gather(Data4, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.3 <- transform(df4.3, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1.2 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-my_plot4 <- ggplot(df5.3, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.3$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Present") 
-```
-
-```{r multipplot exp 11, echo=FALSE, message=FALSE, warning=FALSE}
-
-list9 <- list()
-
-for (i in 1:2) {
-  my_plot3 <- ggplot(df5.2, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.2$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Absent")
-list9[[1]]<- my_plot3
-
-my_plot4 <- ggplot(df5.3, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.3$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Present")
-list9[[2]] <- my_plot4
-  
-}
-
-multiplot(plotlist = list9, cols = 2)
-
-```
-
-
-
-
-
-COLOR SEARCH AMONG T's plus WM 
-
-Pure color T search with Working memory load. 
-
-```{r sub 12 Absent, echo=FALSE, message=FALSE, warning=FALSE}
-
-##Pure Color T Search with WM (exp. 12)    colour search among T's plus WM
-
-data5 <- read.csv("~/Dropbox/VCA LAB/12 .Means.TargetAbsent.csv")
-
-Data5 <- data5[,-(0:1)]  
-
-colnames(Data5) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df4.4 <- gather(Data5, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.4 <- transform(df4.4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-my_plot5 <- ggplot(df5.4, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.4$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Absent") 
-```
-
-```{r sub 12 Present, echo=FALSE, message=FALSE, warning=FALSE}
-data6 <- read.csv("~/Dropbox/VCA LAB/12 .Means.TargetPresent.csv")
-
-Data6 <- data6[,-(0:1)]  
-
-colnames(Data6) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
-
-df4.5 <- gather(Data6, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.5 <- transform(df4.5, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1.4 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot6 <- ggplot(df5.5, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.5$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Present") 
-
-```
-
-```{r multiplot exp 12, echo=FALSE, message=FALSE, warning=FALSE}
-
-list10 <- list()
-
-for (i in 1:2){
-  my_plot5 <- ggplot(df5.4, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.4$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Absent")
-  list10[[1]]<-my_plot5
-  
-  my_plot6 <- ggplot(df5.5, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.5$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Present")
-  list10[[2]]<- my_plot6
-}
-
-multiplot(plotlist = list10, cols = 2)
-
-```
-
-Color Search among T's
-
-Single target pure color search similar to Exp 12 but not W, and with a new set of stimuli
-
-```{r exp 16 Absent, echo=FALSE, message=FALSE, warning=FALSE}
-
-
-##Pure Color T Search No WM (exp. 16)    colour search among T's
-
-
-data7 <- read.csv("~/Dropbox/VCA LAB/16 .Means.TargetAbsent.csv")
-
-Data7 <- data7[,-(0:1)] 
-
-
-colnames(Data7) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-
-df4.6 <- gather(Data7, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.6 <- transform(df4.6, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1.5 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot7 <- ggplot(df5.6, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.6$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Absent") 
-
-```
-
-```{r sub 16 Present, echo=FALSE, message=FALSE, warning=FALSE}
-
-data7.1 <- read.csv("~/Dropbox/VCA LAB/16 .Means.TargetPresent.csv")
-
-Data7.1 <- data7.1[,-(0:1)]
-
-colnames(Data7.1) =c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df4.6.1 <- gather(Data7.1, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.6.1 <- transform(df4.6.1, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1.5.1 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot7.1 <- ggplot(df5.6.1, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.6.1$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Present") 
-
-```
-
-```{r multiplot exp 16, echo=FALSE, message=FALSE, warning=FALSE}
-
-List11 <- list()
-
-for (i in 1:2){
-  my_plot7 <- ggplot(df5.6, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.6$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Absent")+ylim(0,30)
-  List11[[1]]<- my_plot7
-  
- my_plot7.1 <- ggplot(df5.6.1, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.6.1$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Present")+ylim(0,30)
- List11[[2]]<- my_plot7.1
-}
-
-multiplot(plotlist = List11, cols=2)
-```
-
-
-Dual Target Pure Color T search 
-Two color search among T's 
-Dual target color search with only T's (4step)
-```{r Sub 18 Present, echo=FALSE, message=FALSE, warning=FALSE}
-
-###Dual Target Pure Color Search (4-step) (exp. 18)    dual colour search among T's
-
-data8 <- read.csv("~/Dropbox/VCA LAB/18 .Means.TargetPresent (1).csv")
-
-Data8 <- data8[,-(0:1)] 
-
-colnames(Data8) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df4.7 <- gather(Data8, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.7 <- transform(df4.7, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1.6 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-my_plot8 <- ggplot(df5.7, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.7$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Present") 
-```
-
-```{r Sub 18 Absent, echo=FALSE, message=FALSE, warning=FALSE}
-data9 <- read.csv("~/Dropbox/VCA LAB/18 .Means.TargetAbsent.csv")
-
-Data9 <- data9[,-(0:1)] 
-
-colnames(Data9) = c("03","04","06","07","08","09","10","11","12","13","14","15","16","17","18","19")
-
-df4.8 <- gather(Data9, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df5.8 <- transform(df4.8, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df1.7 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot9 <- ggplot(df5.8, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.8$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Absent") 
-
-```
-
-```{r multiplo(t exp 18, echo=FALSE, message=FALSE, warning=FALSE}
-list12 <- list()
-for (i in 1:2){
-  my_plot8 <- ggplot(df5.7, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.7$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Present")+ylim(0,30)
-  list12[[1]]<- my_plot8
-  
-my_plot9 <- ggplot(df5.8, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df5.8$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Absent")+ylim(0,30)
-  list12[[2]]<- my_plot9
-  
-}
- multiplot(plotlist = list12, cols = 2)
-
-```
-    
-
-    
-COLOR T SEARCH PLUS WORKING MEMORY 
-
-- Single target search for color with color patch working memory load
-- Color selectivity with the WM load was disrupted across al distractor colors. The identity of the WM load color had no specific effect on the search fixation patterns. 
-WM accuracy was okay for exact color ( ~ 35% error rate) but excellent for 1-2 steps from color (~8%)
-
-```{r 7 Present, echo=FALSE, message=FALSE, warning=FALSE}
-data14 <- read.csv("~/Dropbox/VCA LAB/7  .Means.TargetPresent.csv")
-
-Data14 <- data14[,-(0:1)] 
-
-colnames(Data14) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df5.4 <- gather(Data14, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df9 <- transform(df5.4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df_4 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot14 <- ggplot(df9, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df9$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Present")+ylim(0,30)
-
-```
-
-```{r 7 Absent, echo=FALSE, message=FALSE, warning=FALSE}
-data15 <- read.csv("~/Dropbox/VCA LAB/7  .Means.TargetAbsent.csv")
-
-Data15 <- data15[,-(0:1)] 
-
-colnames(Data15) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
-
-df5.5 <- gather(Data15, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df10 <- transform(df5.5, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df_5 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot15 <- ggplot(df10, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df10$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Absent")
-
-```
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-list13 <- list()
-
-for (i in 1:2){
-  my_plot14 <- ggplot(df9, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df9$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Present")
-  list13[[1]]<- my_plot14
-  
-  my_plot15 <- ggplot(df10, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df10$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Absent")
-  list13[[2]]<- my_plot15
-
-}
-
-multiplot(plotlist = list13, cols = 2)
-
-```
-
-
-
-
-
-COLOR T SEARCH PLUS WORKING MEMORY 
-
-Single target search for color with WM load.
-
-- Color selectivity was slightly affected across all distractor colors. Working memory accuracy was very good (~10% error rate)
-```{r 8 Present, echo=FALSE, message=FALSE, warning=FALSE}
-
-data16 <- read.csv("~/Dropbox/VCA LAB/8  .Means.TargetPresent.csv")
-
-Data16 <- data16[,-(0:1)] 
-
-colnames(Data16) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
-
-df5.6 <- gather(Data16, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df11 <- transform(df5.6, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
-
-#df_6 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot16 <- ggplot(df11, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df11$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 8 Target Present")
-```
-
-
-```{r 8 Absent, echo=FALSE, message=FALSE, warning=FALSE}
-
-data17 <- read.csv("~/Dropbox/VCA LAB/8  .Means.TargetAbsent.csv")
-
-
-Data17 <- data17[,-(0:1)] 
-
-colnames(Data17) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
-
-df5.7 <- gather(Data17, length, Prob)%>%na.omit() # arranges data into a long format. 
-
-df12 <- transform(df5.7, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
-
-##df_7 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
-
-
-
-my_plot17 <- ggplot(df12, aes(x = Sequence , y =Prob))+
-  geom_line(aes(group = df12$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "")
-```
-
-
-```{r multiplot exp 8, echo=FALSE, message=FALSE, warning=FALSE}
-
-list14 <- list()
-
-for (i in 1:2){
-  my_plot16 <- ggplot(df11, aes(x = Sequence , y = Prob))+
-  geom_line(aes(group = df11$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 8 Target Present")+ylim(0,30)
-  list14[[1]]<- my_plot16
- 
-  
-  my_plot17 <- ggplot(df12, aes(x = Sequence , y =Prob))+
-  geom_line(aes(group = df12$length, color = length))+
-  geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 8 Target Absent")+ylim(0,30) 
-  list14[[2]]<- my_plot17
-
-  }
-
-
-multiplot(plotlist = list14, cols =2)
-
-
-```
+# ```{r, message=FALSE, warning=FALSE, include=FALSE}
+# 
+# load("~/Dropbox (HSPH)/VCA LAB/Seque_Data.rda")
+# load("~/Dropbox/VCA LAB/Num_df_trial.rda")
+# require(dplyr)
+# require(tidyr)
+# require(ggplot2)
+# require(plotly) # Interactive graphing 
+# library(stringr)
+# library(bsselectR)
+# library(tidyverse)
+# library(scales)
+# library(acs14lite)
+# 
+# multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
+#   require(grid)
+# 
+#   plots <- c(list(...), plotlist)
+# 
+#   numPlots = length(plots)
+# 
+#   if (is.null(layout)) {
+#     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+#                     ncol = cols, nrow = ceiling(numPlots/cols))
+#   }
+# 
+#   if (numPlots == 1) {
+#     print(plots[[1]])
+# 
+#   } else {
+#     grid.newpage()
+#     pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+# 
+#     for (i in 1:numPlots) {
+#       matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+# 
+#       print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+#                                       layout.pos.col = matchidx$col))
+#     }
+#   }
+# }
+# 
+# 
+# 
+# ```
+# 
+# ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# Seque_Data_1 <- Seque_Data%>% dplyr::select(TRIAL_LABEL,CURRENT_FIX_INDEX,CURRENT_FIX_INTEREST_AREAS,NEXT_FIX_NEAREST_INTEREST_AREA, RECORDING_SESSION_LABEL,trial,TRIAL_FIXATION_TOTAL) ## This code selects the columns that I am most interested in.
+# colnames(Seque_Data_1)[colnames(Seque_Data_1)=="RECORDING_SESSION_LABEL"]<-"Subject" # changes the name of x column.
+# 
+# #Num_df_trial <- Seque_Data_1 %>%
+#   #dplyr::select(Subject, trial)%>%
+#   #dplyr::group_by(Subject, trial)%>%
+#   #dplyr::summarise(Total_per_trial = n())%>%
+#   #dplyr::arrange(desc(Subject))
+# 
+# head(Num_df_trial)
+# 
+# m<-ggplot(Num_df_trial, aes(x = trial, y = Total_per_trial, color= Subject))+ geom_point() + theme(axis.title.y = element_text(size = rel(1.5)))+theme(axis.title.x = element_text(size = rel(1.5)))+theme(legend.key = element_rect(size = rel(1.5)))+theme(axis.text = element_text(size = 15))
+# 
+# ggplotly(m)
+# 
+# ```
+# 
+# EXPERIMENT 1A
+# - Dual target 1-step and 4-step color separations 
+# - Split- target cost; similarity of targets decreases, fixations to dissimilar distractors increases. ( STROUD DISSERTATIONS EXP 1A)
+# ```{r 1a Present, message=FALSE, warning=FALSE, include=FALSE}
+# 
+# data10 <- read.csv("~/Dropbox/VCA LAB/1a  .Means.TargetPresent.csv")
+# 
+# Data10 <- data10[,-(0:1)] # Substracts columns from the data frame
+# 
+# colnames(Data10) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18") # adds labels to columns
+# 
+# df4.9 <- gather(Data10, Length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.9 <- transform(df4.9, Sequence=ave(seq_along(Length),Length, FUN=seq_along)) ## Creates a sequence that runs along the lenght of the fixation.
+# 
+# ### Adds counts of the trials 
+# 
+# df1.8 <- data.frame(x=c(0:18)) ## adds symbols to each data point for each trial.
+# 
+# 
+# my_plot10 <- ggplot(df5.9, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.9$Length, color = Length))+
+#   geom_point(aes(alpha = 0.03))
+#   
+#   
+# ```
+# 
+# ```{r 1a Absent, message=FALSE, warning=FALSE, include=FALSE}
+# data11 <- read.csv("~/Dropbox/VCA LAB/1a  .Means.TargetAbsent.csv")
+# 
+# Data11 <- data11[,-(0:1)] 
+# 
+# colnames(Data11) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df5.1 <- gather(Data11, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df6 <- transform(df5.1, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# df1.9 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# #df6$length <- as.numeric(as.character(df6$length))
+# 
+# my_plot11 <- ggplot(df6, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df6$length, color = length))+
+#   geom_point(aes(alpha = 0.03))
+# 
+# ```
+# 
+# ```{r multiplot 1a, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# list6 <- list()
+# 
+# for (i in 1:2) {
+#   my_plot11 <- ggplot(df6, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df6$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "1a Absent")
+#   list6[[1]] <- my_plot11
+#   
+# 
+# my_plot10 <- ggplot(df5.9, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.9$Length, color = Length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "1a Present")+ylim(0,30) 
+# list6[[2]] <- my_plot10
+#   
+# 
+# }
+# 
+# multiplot(plotlist = list6, cols= 2)
+# 
+# ```
+# 
+# ```{r 1b Present, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# ### (exp. 1b) colour T search
+# 
+# data12 <- read.csv("~/Dropbox/VCA LAB/1b  .Means.TargetPresent.csv")
+# 
+# Data12 <- data12[,-(0:1)] 
+# 
+# colnames(Data12) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df5.2 <- gather(Data12, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df7 <- transform(df5.2, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df_2 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot12 <- ggplot(df7, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df7$length, color = length))+
+#   geom_point(aes(alpha = 0.03)) # change labs to upper limits 40 for all of them 
+# ```
+# 
+# ```{r 1b Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# data13 <- read.csv("~/Dropbox/VCA LAB/1b  .Means.TargetAbsent.csv")
+# 
+# Data13 <- data13[,-(0:1)] 
+# 
+# colnames(Data13) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
+# 
+# df5.3 <- gather(Data13, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df8 <- transform(df5.3, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df_3 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot13 <- ggplot(df8, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df8$length, color = length))+
+#   geom_point(aes(alpha = 0.03))
+# 
+# 
+# ```
+# 
+# ```{r multiplot 1b, echo=FALSE, message=FALSE, warning=FALSE}
+# list7<- list()
+# 
+# for (i in 1:2){
+#  my_plot12 <- ggplot(df7, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df7$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = " Exp 1b Target Present")+ylim(0,30)
+#   list7[[1]] <- my_plot12 
+#   
+# 
+# my_plot13 <- ggplot(df8, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df8$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = " Exp 1b Target Absent")+ylim(0,30)
+#   list7[[2]] <- my_plot13
+# }
+# 
+# multiplot(plotlist = list7, cols =2)
+# 
+# ```
+# 
+# 
+# 
+# 
+# Color T search plust WM (orientation)
+# 
+# Orientation bar - WM
+# 
+# Color selectivity was unaffected in the search task. WM accuracy as poor (error rate ~35%)
+# ```{r sub 10 Target Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# data <- read.csv("~/Dropbox/VCA LAB/10  .Means.TargetAbsent.csv") 
+# 
+# Data <- data[,-(0:1)] 
+# 
+# colnames(Data) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# my_df4 <- gather(Data, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# my_df5 <- transform(my_df4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# my_plot1 <- ggplot(my_df5, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = my_df5$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 10 Target Absent") 
+# 
+# 
+# 
+# ```
+# 
+# ```{r Sub 10 Target Present, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# 
+# data2 <- read.csv("~/Dropbox/VCA LAB/10  .Means.TargetPresent.csv")
+# Data2 <- data2[,-(0:1)] 
+# 
+# colnames(Data2) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17", "18")
+# 
+# df4 <- gather(Data2, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5 <- transform(df4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# my_plot2 <- ggplot(df5, aes(x = Sequence, y = Prob))+
+#   geom_line(aes(group = df5$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 10 Target Present") 
+# 
+# ```
+# 
+# ```{r Exp 10 multiplot, echo=FALSE, message=FALSE, warning=FALSE}
+# list8 <- list()
+# 
+# for(i in 1:2) {
+# my_plot1 <- ggplot(my_df5, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = my_df5$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle("Exp 10 Target Absent")
+# list8[[1]]<- my_plot1
+# 
+#  my_plot2 <- ggplot(df5, aes(x = Sequence, y = Prob))+
+#   geom_line(aes(group = df5$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 10 Target Present")
+# list8[[2]] <- my_plot2
+# 
+# }
+# 
+# multiplot(plotlist = list8, cols = 2)
+# 
+# 
+# ```
+# 
+# 
+# 
+# 
+# 
+# COLOR T SEARCH PLUS WM ( DOTS )
+# 
+# Spatial dot task. 
+# Color selectivity was unaffected. WM accuracy was similar to color patch ( error rate ~ 35%)
+# 
+# ```{r Exp 11 Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# 
+# data3 <- read.csv("~/Dropbox/VCA LAB/11  .Means.TargetAbsent.csv")
+# 
+# Data3 <- data3[,-(0:1)]  
+# 
+# colnames(Data3) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df4.2 <- gather(Data3, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.2 <- transform(df4.2, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1.1 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# my_plot3 <- ggplot(df5.2, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.2$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Absent") 
+# 
+# ```
+# 
+# ```{r sub 11 Present, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# data4 <- read.csv("~/Dropbox/VCA LAB/11  .Means.TargetPresent.csv")
+# 
+# Data4 <- data4[,-(0:1)]  
+# 
+# colnames(Data4) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df4.3 <- gather(Data4, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.3 <- transform(df4.3, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1.2 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# my_plot4 <- ggplot(df5.3, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.3$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Present") 
+# ```
+# 
+# ```{r multipplot exp 11, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# list9 <- list()
+# 
+# for (i in 1:2) {
+#   my_plot3 <- ggplot(df5.2, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.2$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Absent")
+# list9[[1]]<- my_plot3
+# 
+# my_plot4 <- ggplot(df5.3, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.3$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 11 Target Present")
+# list9[[2]] <- my_plot4
+#   
+# }
+# 
+# multiplot(plotlist = list9, cols = 2)
+# 
+# ```
+# 
+# 
+# 
+# 
+# 
+# COLOR SEARCH AMONG T's plus WM 
+# 
+# Pure color T search with Working memory load. 
+# 
+# ```{r sub 12 Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# ##Pure Color T Search with WM (exp. 12)    colour search among T's plus WM
+# 
+# data5 <- read.csv("~/Dropbox/VCA LAB/12 .Means.TargetAbsent.csv")
+# 
+# Data5 <- data5[,-(0:1)]  
+# 
+# colnames(Data5) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df4.4 <- gather(Data5, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.4 <- transform(df4.4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# my_plot5 <- ggplot(df5.4, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.4$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Absent") 
+# ```
+# 
+# ```{r sub 12 Present, echo=FALSE, message=FALSE, warning=FALSE}
+# data6 <- read.csv("~/Dropbox/VCA LAB/12 .Means.TargetPresent.csv")
+# 
+# Data6 <- data6[,-(0:1)]  
+# 
+# colnames(Data6) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
+# 
+# df4.5 <- gather(Data6, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.5 <- transform(df4.5, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1.4 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot6 <- ggplot(df5.5, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.5$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Present") 
+# 
+# ```
+# 
+# ```{r multiplot exp 12, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# list10 <- list()
+# 
+# for (i in 1:2){
+#   my_plot5 <- ggplot(df5.4, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.4$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Absent")
+#   list10[[1]]<-my_plot5
+#   
+#   my_plot6 <- ggplot(df5.5, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.5$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 12 Target Present")
+#   list10[[2]]<- my_plot6
+# }
+# 
+# multiplot(plotlist = list10, cols = 2)
+# 
+# ```
+# 
+# Color Search among T's
+# 
+# Single target pure color search similar to Exp 12 but not W, and with a new set of stimuli
+# 
+# ```{r exp 16 Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# 
+# ##Pure Color T Search No WM (exp. 16)    colour search among T's
+# 
+# 
+# data7 <- read.csv("~/Dropbox/VCA LAB/16 .Means.TargetAbsent.csv")
+# 
+# Data7 <- data7[,-(0:1)] 
+# 
+# 
+# colnames(Data7) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# 
+# df4.6 <- gather(Data7, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.6 <- transform(df4.6, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1.5 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot7 <- ggplot(df5.6, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.6$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Absent") 
+# 
+# ```
+# 
+# ```{r sub 16 Present, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# data7.1 <- read.csv("~/Dropbox/VCA LAB/16 .Means.TargetPresent.csv")
+# 
+# Data7.1 <- data7.1[,-(0:1)]
+# 
+# colnames(Data7.1) =c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df4.6.1 <- gather(Data7.1, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.6.1 <- transform(df4.6.1, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1.5.1 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot7.1 <- ggplot(df5.6.1, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.6.1$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Present") 
+# 
+# ```
+# 
+# ```{r multiplot exp 16, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# List11 <- list()
+# 
+# for (i in 1:2){
+#   my_plot7 <- ggplot(df5.6, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.6$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Absent")+ylim(0,30)
+#   List11[[1]]<- my_plot7
+#   
+#  my_plot7.1 <- ggplot(df5.6.1, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.6.1$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 16 Present")+ylim(0,30)
+#  List11[[2]]<- my_plot7.1
+# }
+# 
+# multiplot(plotlist = List11, cols=2)
+# ```
+# 
+# 
+# Dual Target Pure Color T search 
+# Two color search among T's 
+# Dual target color search with only T's (4step)
+# ```{r Sub 18 Present, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# ###Dual Target Pure Color Search (4-step) (exp. 18)    dual colour search among T's
+# 
+# data8 <- read.csv("~/Dropbox/VCA LAB/18 .Means.TargetPresent (1).csv")
+# 
+# Data8 <- data8[,-(0:1)] 
+# 
+# colnames(Data8) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df4.7 <- gather(Data8, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.7 <- transform(df4.7, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1.6 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# my_plot8 <- ggplot(df5.7, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.7$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Present") 
+# ```
+# 
+# ```{r Sub 18 Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# data9 <- read.csv("~/Dropbox/VCA LAB/18 .Means.TargetAbsent.csv")
+# 
+# Data9 <- data9[,-(0:1)] 
+# 
+# colnames(Data9) = c("03","04","06","07","08","09","10","11","12","13","14","15","16","17","18","19")
+# 
+# df4.8 <- gather(Data9, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df5.8 <- transform(df4.8, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df1.7 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot9 <- ggplot(df5.8, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.8$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Absent") 
+# 
+# ```
+# 
+# ```{r multiplo(t exp 18, echo=FALSE, message=FALSE, warning=FALSE}
+# list12 <- list()
+# for (i in 1:2){
+#   my_plot8 <- ggplot(df5.7, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.7$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Present")+ylim(0,30)
+#   list12[[1]]<- my_plot8
+#   
+# my_plot9 <- ggplot(df5.8, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df5.8$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 18 Target Absent")+ylim(0,30)
+#   list12[[2]]<- my_plot9
+#   
+# }
+#  multiplot(plotlist = list12, cols = 2)
+# 
+# ```
+#     
+# 
+#     
+# COLOR T SEARCH PLUS WORKING MEMORY 
+# 
+# - Single target search for color with color patch working memory load
+# - Color selectivity with the WM load was disrupted across al distractor colors. The identity of the WM load color had no specific effect on the search fixation patterns. 
+# WM accuracy was okay for exact color ( ~ 35% error rate) but excellent for 1-2 steps from color (~8%)
+# 
+# ```{r 7 Present, echo=FALSE, message=FALSE, warning=FALSE}
+# data14 <- read.csv("~/Dropbox/VCA LAB/7  .Means.TargetPresent.csv")
+# 
+# Data14 <- data14[,-(0:1)] 
+# 
+# colnames(Data14) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df5.4 <- gather(Data14, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df9 <- transform(df5.4, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df_4 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot14 <- ggplot(df9, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df9$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Present")+ylim(0,30)
+# 
+# ```
+# 
+# ```{r 7 Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# data15 <- read.csv("~/Dropbox/VCA LAB/7  .Means.TargetAbsent.csv")
+# 
+# Data15 <- data15[,-(0:1)] 
+# 
+# colnames(Data15) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18")
+# 
+# df5.5 <- gather(Data15, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df10 <- transform(df5.5, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df_5 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot15 <- ggplot(df10, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df10$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Absent")
+# 
+# ```
+# 
+# ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# list13 <- list()
+# 
+# for (i in 1:2){
+#   my_plot14 <- ggplot(df9, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df9$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Present")
+#   list13[[1]]<- my_plot14
+#   
+#   my_plot15 <- ggplot(df10, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df10$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 7 Target Absent")
+#   list13[[2]]<- my_plot15
+# 
+# }
+# 
+# multiplot(plotlist = list13, cols = 2)
+# 
+# ```
+# 
+# 
+# 
+# 
+# 
+# COLOR T SEARCH PLUS WORKING MEMORY 
+# 
+# Single target search for color with WM load.
+# 
+# - Color selectivity was slightly affected across all distractor colors. Working memory accuracy was very good (~10% error rate)
+# ```{r 8 Present, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# data16 <- read.csv("~/Dropbox/VCA LAB/8  .Means.TargetPresent.csv")
+# 
+# Data16 <- data16[,-(0:1)] 
+# 
+# colnames(Data16) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
+# 
+# df5.6 <- gather(Data16, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df11 <- transform(df5.6, Sequence=ave(seq_along(length),length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# #df_6 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot16 <- ggplot(df11, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df11$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 8 Target Present")
+# ```
+# 
+# 
+# ```{r 8 Absent, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# data17 <- read.csv("~/Dropbox/VCA LAB/8  .Means.TargetAbsent.csv")
+# 
+# 
+# Data17 <- data17[,-(0:1)] 
+# 
+# colnames(Data17) = c("03","04","05","06","07","08","09","10","11","12","13","14","15","16","17")
+# 
+# df5.7 <- gather(Data17, length, Prob)%>%na.omit() # arranges data into a long format. 
+# 
+# df12 <- transform(df5.7, Sequence=ave(seq_along(length), length, FUN=seq_along)) ### Adds counts of the trials 
+# 
+# ##df_7 <- data.frame(x=c(0:17)) ## adds symbols to each data point for each trial.
+# 
+# 
+# 
+# my_plot17 <- ggplot(df12, aes(x = Sequence , y =Prob))+
+#   geom_line(aes(group = df12$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "")
+# ```
+# 
+# 
+# ```{r multiplot exp 8, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# list14 <- list()
+# 
+# for (i in 1:2){
+#   my_plot16 <- ggplot(df11, aes(x = Sequence , y = Prob))+
+#   geom_line(aes(group = df11$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 8 Target Present")+ylim(0,30)
+#   list14[[1]]<- my_plot16
+#  
+#   
+#   my_plot17 <- ggplot(df12, aes(x = Sequence , y =Prob))+
+#   geom_line(aes(group = df12$length, color = length))+
+#   geom_point(aes(alpha = 0.03))+ggtitle(label = "Exp 8 Target Absent")+ylim(0,30) 
+#   list14[[2]]<- my_plot17
+# 
+#   }
+# 
+# 
+# multiplot(plotlist = list14, cols =2)
+# 
+# 
+# ```
 
 

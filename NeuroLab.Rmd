@@ -7,37 +7,37 @@ output: html_document
 
 ## Familial Dementia and Neuroimaging lab
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-require(dplyr)
-require(ggplot2)
-require(plotly)
-require(Hmisc)
-require(ppcor)
-require(gridExtra)
-require(dplyr)
-require(Rmisc)
-
-load("~/Dropbox/AD summer Research 2016/Project AD/EF2.rda")%>% na.omit()
-load("~/Dropbox/AD summer Research 2016/Project AD/SDNepaPoster.rda")
-```
-
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-
-### Difference between the carriers and non-carriers between the three tests. 
-Carriers <-data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(44,35,144))
-NonCarriers <- data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(92 ,20, 45))
-
-
-dodge <- position_dodge(width = 0.9)
-limits <- aes(ymax = f1$Average + f1$SE,
-              ymin = f1$Average - f1$SE)
-
-plot2 <- ggplot(f1, aes(x = Tests, y = Average , fill = Groups))+geom_bar(position = "dodge", stat = "identity")+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 20))+labs(y ="Total Scores", x = "Tests")+geom_errorbar(limits,position = dodge, width = 0.25)
- 
-plot2
-
-```
+# ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# require(dplyr)
+# require(ggplot2)
+# require(plotly)
+# require(Hmisc)
+# require(ppcor)
+# require(gridExtra)
+# require(dplyr)
+# require(Rmisc)
+# 
+# load("~/Dropbox/AD summer Research 2016/Project AD/EF2.rda")%>% na.omit()
+# load("~/Dropbox/AD summer Research 2016/Project AD/SDNepaPoster.rda")
+# ```
+# 
+# 
+# ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# 
+# ### Difference between the carriers and non-carriers between the three tests. 
+# Carriers <-data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(44,35,144))
+# NonCarriers <- data.frame(Tests = c("Ineco Total", "WSCT", "Stroop"), Average = c(92 ,20, 45))
+# 
+# 
+# dodge <- position_dodge(width = 0.9)
+# limits <- aes(ymax = f1$Average + f1$SE,
+#               ymin = f1$Average - f1$SE)
+# 
+# plot2 <- ggplot(f1, aes(x = Tests, y = Average , fill = Groups))+geom_bar(position = "dodge", stat = "identity")+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 20))+labs(y ="Total Scores", x = "Tests")+geom_errorbar(limits,position = dodge, width = 0.25)
+#  
+# plot2
+# 
+# ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
