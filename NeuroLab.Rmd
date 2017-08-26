@@ -39,7 +39,7 @@ output: html_document
 # 
 # ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+#```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 i_ttl <- ggplot(EF2, aes(x = PIB, y = Ineco_ttl, color = Status, shape = Status))+geom_point(aes(size = 20))+geom_smooth(method = "lm", se = FALSE)+xlab("PIB-DVR")+ylab("Total Scores")+guides(size = "none")+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 30))+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))
 
@@ -52,7 +52,7 @@ Wis_per <- ggplot(EF2, aes(x = PIB, y = Wis_Rtas_Perse, color = Status, shape = 
 
 
 
-```
+#```
 
 ###### Original data has not been used. 
 
