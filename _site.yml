@@ -19,9 +19,8 @@ navbar:
         href: vcalab.html
       - text: "AD-Neuroimaging Lab"
         href: NeuroLab.html
-        
 output:
- html_document
+ html_document:
   theme: cosmo
   css: style.css
 
