@@ -1,7 +1,7 @@
-name: "My R Portfolio"
+name: "Circadian Rhythms"
 output_dir: "."
 navbar: 
- title: "Andrea Ovalle's R portfolio"
+ title: "Circadian Clocks"
  left:
   - text: "Home"
     icon: fa-home
@@ -9,15 +9,15 @@ navbar:
   - text: "About"
     icon: fa-info
     href: about.html
-  - text: "Projects"
+  - text: "Topics"
     icon: fa-gear
     href: projects.html
     menu: 
-      - text: "Biostatistics and Computational Biology"
+      - text: "How Do Your Body Clocks Work?"
         href: regnet.html
-      - text: "Visual Cognition Lab"
+      - text: "Current Research"
         href: vcalab.html
-      - text: "AD-Neuroimaging Lab"
+      - text: "News In The Field"
         href: NeuroLab.html
 output:
  html_document:
