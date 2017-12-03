@@ -1,11 +1,26 @@
 ---
-title: "About"
+title: "What Are Circadian Rhythms?"
 author: "Andrea Ovalle"
 date: "August 24, 2017"
 output: html_document
 ---
 
-Spreading the love in R
+Circadian rhythms are endogenous biological processes that regulate sleep and wakefulness over a 24 hour period. These processes can be affected by nontraditional work schedules that include night shits and require employes to be active during times where their biological clocks are programed to be inactive. Several studies have found that shift work is associated with disruption of circadian rhythms, which could potentiallly influenced immune dysfunction and increased risk for cancer(1).
+
+_How Does Circadian Clocks Work?_
+
+The suprachiasmatic nucleus (SCN) is a region in the hypothalamus that is directly involve in circadian rhythms. The SCN is called the master clock  because it coordinates peripheral oscillators to regulate different body functions in a 24 hour cycle. Peripheral oscillators are cells that are located in the peripheral tissues, such as the thalamus, spleen, and kidney. 
+
+
+_How does the SCN knows that is day or night ?_ 
+
+The SCN receives input from the environment through the photosensitive ganglion cells in the retina. These cells then sends input through the retinohypothalamic tract to cells in the ventrolateral SCN.
+
+![](SCN_Per.png)
+
+
+
+
 
 
 
