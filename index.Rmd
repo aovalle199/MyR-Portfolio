@@ -4,9 +4,9 @@ author: "By Andrea Ovalle"
 output: html_document
 ---
 
-##HOME PAGE 
-####In this website you will find general information about Circadian Rhythms!
-![](cf.png)
+##In this website you will find general information about Circadian Rhythms!
+
+![](cf.png){width=250px}
 
 This website is meant to introduce a general overview of circadian rhythms are and how do they work in our bodies. I would like to introduce some research that might suggest that circadian disruption might have potential adverse health problems such as cardiovascular diseases. 
  
