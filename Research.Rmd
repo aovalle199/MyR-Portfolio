@@ -1,7 +1,6 @@
 ---
 title: "Current Research"
-author: "Andrea Ovalle"
-date: "December 2, 2017"
+author: "By Andrea Ovalle"
 output: html_document
 ---
 

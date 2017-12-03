@@ -16,8 +16,8 @@ navbar:
       - text: "Molecular Mechanisms of Circadian Clocks"
         href: HowTo.html
       - text: "Current Research"
-        href: Reseach.html
-      - text: "News In The Field"
+        href: Research.html
+      - text: "News in The Field"
         href: News.html
 output:
  html_document:
