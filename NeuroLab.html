@@ -17,7 +17,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -101,34 +101,34 @@ button.code-folding-btn:focus {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 51px;
+  padding-top: 60px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 
 .section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 .section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
+  padding-top: 65px;
+  margin-top: -65px;
 }
 </style>
 
@@ -175,7 +175,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Andrea Ovalle's R portfolio</a>
+      <a class="navbar-brand" href="index.html">Circadian Clocks</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -197,19 +197,19 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-gear"></span>
      
-    Projects
+    Topics
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="regnet.html">Biostatistics and Computational Biology</a>
+      <a href="Howto.html">How Do Your Body Clocks Work?</a>
     </li>
     <li>
-      <a href="vcalab.html">Visual Cognition Lab</a>
+      <a href="Reseach.html">Current Research</a>
     </li>
     <li>
-      <a href="NeuroLab.html">AD-Neuroimaging Lab</a>
+      <a href="News.html">News In The Field</a>
     </li>
   </ul>
 </li>
@@ -234,8 +234,27 @@ $(document).ready(function () {
 
 <div id="familial-dementia-and-neuroimaging-lab" class="section level2">
 <h2>Familial Dementia and Neuroimaging lab</h2>
-<pre><code>## [1] &quot;EF2&quot;</code></pre>
-<p><img src="NeuroLab_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="r-echofalse-messagefalse-warningfalse-requiredplyr-requireggplot2-requireplotly-requirehmisc-requireppcor-requiregridextra-requiredplyr-requirermisc-loaddropboxad-summer-research-2016project-adef2.rda-na.omit-loaddropboxad-summer-research-2016project-adsdnepaposter.rda" class="section level1">
+<h1><code>{r, echo=FALSE, message=FALSE, warning=FALSE} # require(dplyr) # require(ggplot2) # require(plotly) # require(Hmisc) # require(ppcor) # require(gridExtra) # require(dplyr) # require(Rmisc) #  # load(&quot;~/Dropbox/AD summer Research 2016/Project AD/EF2.rda&quot;)%&gt;% na.omit() # load(&quot;~/Dropbox/AD summer Research 2016/Project AD/SDNepaPoster.rda&quot;) #</code></h1>
+</div>
+<div id="section" class="section level1">
+<h1></h1>
+</div>
+<div id="section-1" class="section level1">
+<h1></h1>
+</div>
+<div id="r-echofalse-messagefalse-warningfalse-difference-between-the-carriers-and-non-carriers-between-the-three-tests.-carriers--data.frametests-cineco-total-wsct-stroop-average-c4435144-noncarriers---data.frametests-cineco-total-wsct-stroop-average-c92-20-45-dodge---position_dodgewidth-0.9-limits---aesymax-f1average-f1se-ymin-f1average---f1se-plot2---ggplotf1-aesx-tests-y-average-fill-groupsgeom_barposition-dodge-stat-identitythemeaxis.text.y-element_textsize-15-axis.text.x-element_textsize-15themeaxis.title-element_textsize-32legend.text-element_textsize-20-legend.title-element_textsize-20labsy-total-scores-x-testsgeom_errorbarlimitsposition-dodge-width-0.25-plot2" class="section level1">
+<h1><code>{r, echo=FALSE, message=FALSE, warning=FALSE} #  # ### Difference between the carriers and non-carriers between the three tests.  # Carriers &lt;-data.frame(Tests = c(&quot;Ineco Total&quot;, &quot;WSCT&quot;, &quot;Stroop&quot;), Average = c(44,35,144)) # NonCarriers &lt;- data.frame(Tests = c(&quot;Ineco Total&quot;, &quot;WSCT&quot;, &quot;Stroop&quot;), Average = c(92 ,20, 45)) #  #  # dodge &lt;- position_dodge(width = 0.9) # limits &lt;- aes(ymax = f1$Average + f1$SE, #               ymin = f1$Average - f1$SE) #  # plot2 &lt;- ggplot(f1, aes(x = Tests, y = Average , fill = Groups))+geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;)+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 20))+labs(y =&quot;Total Scores&quot;, x = &quot;Tests&quot;)+geom_errorbar(limits,position = dodge, width = 0.25) #   # plot2 #  #</code></h1>
+</div>
+<div id="r-echofalse-messagefalse-warningfalse" class="section level1">
+<h1>```{r, echo=FALSE, message=FALSE, warning=FALSE}</h1>
+<p>i_ttl &lt;- ggplot(EF2, aes(x = PIB, y = Ineco_ttl, color = Status, shape = Status))+geom_point(aes(size = 20))+geom_smooth(method = “lm”, se = FALSE)+xlab(“PIB-DVR”)+ylab(“Total Scores”)+guides(size = “none”)+theme(axis.title = element_text(size = 32),legend.text = element_text(size = 20), legend.title = element_text(size = 30))+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size =15))</p>
+<p>Stroop &lt;- ggplot(EF2, aes(x = PIB, y = Stroop_word.color, shape = Status, color = Status))+geom_point(aes(size = 20))+geom_smooth(method=“lm”, se = FALSE)+xlab(“PIB-DVR”)+ ylab(“Total Scores”)+guides(size = “none”)+theme(axis.title = element_text(size = 32), legend.text = element_text(size = 20), legend.title = element_text(size = 30))+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size = 15))</p>
+<p>Wis_per &lt;- ggplot(EF2, aes(x = PIB, y = Wis_Rtas_Perse, color = Status, shape = Status))+geom_point(aes(size = 20))+geom_smooth(method = “lm”, se = FALSE)+xlab(“PIB-DVR”)+ylab(“Perseverative Responses”)+guides(size = “none”)+theme(axis.title = element_text(size =32), legend.text = element_text(size = 20), legend.title = element_text(size = 30))+theme(axis.text.y = element_text(size = 15), axis.text.x = element_text(size = 15))</p>
+</div>
+<div id="section-2" class="section level1">
+<h1>```</h1>
 <div id="original-data-has-not-been-used." class="section level6">
 <h6>Original data has not been used.</h6>
 </div>
