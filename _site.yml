@@ -14,11 +14,11 @@ navbar:
     href: projects.html
     menu: 
       - text: "How Do Your Body Clocks Work?"
-        href: regnet.html
+        href: Howto.html
       - text: "Current Research"
-        href: vcalab.html
+        href: Reseach.html
       - text: "News In The Field"
-        href: NeuroLab.html
+        href: News.html
 output:
  html_document:
   theme: flatly
