@@ -14,7 +14,7 @@ This website is meant to introduce a general perspective on how circadian rhythm
     + General Perspective 
 * How do circadian clocks work ?
     + Molecular Perspective 
-* Current Research:Literature that have made a significant impact in the field !
+* Current Research: Literature that have made a significant impact in the field !
 * News in the field
 
 ![](circadian_rhythm.png)

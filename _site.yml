@@ -13,8 +13,8 @@ navbar:
     icon: fa-gear
     href: projects.html
     menu: 
-      - text: "Molecular Mechanisms of Circadian Clocks?"
-        href: Howto.html
+      - text: "Molecular Mechanisms of Circadian Clocks"
+        href: HowTo.html
       - text: "Current Research"
         href: Reseach.html
       - text: "News In The Field"
