@@ -13,7 +13,7 @@ navbar:
     icon: fa-gear
     href: projects.html
     menu: 
-      - text: "How Do Your Body Clocks Work?"
+      - text: "Molecular Mechanisms of Circadian Clocks?"
         href: Howto.html
       - text: "Current Research"
         href: Reseach.html
