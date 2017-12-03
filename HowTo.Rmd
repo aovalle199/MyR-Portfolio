@@ -4,7 +4,7 @@ author: "By Andrea Ovalle"
 output: html_document
 ---
 
-#### How do circadian rhythms work in a molecular level ?
+####How do circadian rhythms work in a molecular level ?
 
 Circadian rhythms originate from self-sustained, self-regulated expressions of clock genes, which are the molecular clocks. This molecular mechanism consists of transcription factors that activate and deactivate genes in the nucleus of each cell, this activation and deactivation leads to protein production necessary for the maintaince of a 24 hour cycle.
 

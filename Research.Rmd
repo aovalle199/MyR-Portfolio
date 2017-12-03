@@ -4,11 +4,11 @@ author: "By Andrea Ovalle"
 output: html_document
 ---
 
-I added several papers that can further explain circadian rhythms and how disruption might have several effects on health. However, I also interested on how circadian rhytms might serve as markers for neurodegenerative diseases. 
+I added several papers that can further explain circadian rhythms and how their disruption might have several effects on health. I am also interested on how circadian rhytms might serve as markers for neurodegenerative diseases, so I added a really cool paper about that ! _See Below_
 
-My favorite paper is  _Amyloid-β–Induced Changes in Molecular Clock Properties and Cellular bioenergetics_ Karen Schmitt,Amandine Grimm, and Anne Eckert (2017) I am interested in Biomarkers of AD, and this paper talks about how early circadian disruption might occur pre- mild cognitive impairment and thus be a marker associated with the disease. 
+**My favorite paper is**  _Amyloid-β–Induced Changes in Molecular Clock Properties and Cellular bioenergetics_ Karen Schmitt,Amandine Grimm, and Anne Eckert (2017) I am interested in Biomarkers of AD, and this paper talks about how early circadian disruption might occur pre- mild cognitive impairment and thus be a marker associated with the disease. 
 
-Other papers that should be added to your reading list are: 
+#####Other papers that should be added to your reading list are: 
 
 * Husse, J., Leliavski, A., Tsang, A. H., Oster, H., & Eichele, G. (2014). The light-dark cycle controls peripheral rhythmicity in mice with a genetically ablated suprachiasmatic nucleus clOno, D., Honma, S., Nakajima, Y., Kuroda, S., Enoki, R., & Honma, K. I. (2017).
 
