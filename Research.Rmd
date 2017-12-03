@@ -4,4 +4,17 @@ author: "By Andrea Ovalle"
 output: html_document
 ---
 
-##COMING SOON 
+I added several papers that can further explain circadian rhythms and how disruption might have several effects on health. However, I also interested on how circadian rhytms might serve as markers for neurodegenerative diseases. 
+
+My favorite paper is  _Amyloid-β–Induced Changes in Molecular Clock Properties and Cellular bioenergetics_ Karen Schmitt,Amandine Grimm, and Anne Eckert (2017) I am interested in Biomarkers of AD, and this paper talks about how early circadian disruption might occur pre- mild cognitive impairment and thus be a marker associated with the disease. 
+
+Other papers that should be added to your reading list are: 
+
+* Husse, J., Leliavski, A., Tsang, A. H., Oster, H., & Eichele, G. (2014). The light-dark cycle controls peripheral rhythmicity in mice with a genetically ablated suprachiasmatic nucleus clOno, D., Honma, S., Nakajima, Y., Kuroda, S., Enoki, R., & Honma, K. I. (2017).
+
+* Dissociation of Per1 and Bmal1 circadian rhythms in the suprachiasmatic nucleus in parallel with behavioral outputs. Proceedings of the National Academy of Sciences, 114(18), E3699-E3708.ock. The FASEB Journal, 28(11), 4950-4960.
+
+* Riede, S. J., van der Vinne, V., & Hut, R. A. (2017). The flexible clock: predictive and reactive homeostasis, energy balance and the circadian regulation of sleep–wake timing. Journal of Experimental Biology, 220(5), 738-749.
+
+* Kiessling, S., Beaulieu-Laroche, L., Blum, I. D., Landgraf, D., Welsh, D. K., Storch, K. F., ... & Cermakian, N. (2017). Enhancing circadian clock function in cancer cells inhibits tumor growth. BMC biology, 15(1), 13.
+
