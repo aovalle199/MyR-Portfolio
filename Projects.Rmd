@@ -1,7 +1,6 @@
 ---
 title: "Topics"
-author: "Andrea Ovalle"
-date: "August 24, 2017"
+author: "By Andrea Ovalle"
 output: html_document
 ---
 
