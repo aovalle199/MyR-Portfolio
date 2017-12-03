@@ -1,17 +1,19 @@
 ---
 title: "News"
 author: "Andrea Ovalle"
-date: "December 2, 2017"
 output: html_document
 ---
 
-![](newsch.png)
+![](News_CH.png)
 
 October 2017 
 
-"Three scientists who studied the workings of organisms’ inner circadian clocks have won the 2017 Nobel Prize in Physiology or Medicine. Jeffrey Hall and Michael Rosbash, both at Brandeis University in Waltham, Massachusetts, will split the award of 9 million Swedish kronor (US$1.1 million) with Michael Young at Rockefeller University in New York City"
+###"Three scientists who studied the workings of organisms’ inner circadian clocks have won the 2017 Nobel Prize in Physiology or Medicine. Jeffrey Hall and Michael Rosbash, both at Brandeis University in Waltham, Massachusetts, will split the award of 9 million Swedish kronor (US$1.1 million) with Michael Young at Rockefeller University in New York City" _Nature_
 
-[Link to original Article](https://www.nature.com/news/medicine-nobel-awarded-for-work-on-circadian-clocks-1.22736)
+[Link to Scientist Article](https://www.the-scientist.com/?articles.view/articleNo/50544/title/Giants-of-Circadian-Biology-Win-Nobel-Prize/)
+
+[Link to Nature Article](https://www.nature.com/news/medicine-nobel-awarded-for-work-on-circadian-clocks-1.22736)
+
 
 
 
