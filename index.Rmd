@@ -12,10 +12,10 @@ This website is meant to introduce a general overview of circadian rhythms are a
 
 * What are circadian rhythms?
     + General Perspective 
-* How do your circadian clocks work ?
+* How do circadian clocks work ?
     + Molecular Perspective 
-    + Current Research:Literature that have made a significant impact in the field !
-    + News in the field
+* Current Research:Literature that have made a significant impact in the field !
+* News in the field
 
 ![](circadian_rhythm.png)
 
