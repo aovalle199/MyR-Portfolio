@@ -6,7 +6,7 @@ output: html_document
 
 ##In this website you will find general information about Circadian Rhythms!
 
-This website is meant to introduce a general perspective on how circadian rhythms work in our bodies. Here I would be introducing the molecular mechanism that control our circadian processes, and the different research that supports that circadian disruption might have potential adverse health effects. 
+This website is meant to introduce a general perspective on how circadian rhythms work. Here I would introduce the molecular mechanism that control our circadian processes, and the different research that supports that circadian disruption might have potential adverse health effects. 
  
 #####What information would you find here ? 
 
